@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>
+    Edit_EmployeeBasic
+</h2>
+  <mat-dialog-content class="post-form">
+    <mat-form-field>
+        <input #basicname placeholder="Name" matInput [(ngModel)]="data.name"  required/>
+        <mat-error>Please enter your name</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea put #basicposition placeholder="Position" matInput [(ngModel)]="data.position"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your position</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #basicprofession placeholder="Profession" matInput [(ngModel)]="data.profession"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your profession</mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button color="warn" [mat-dialog-close]='data'>Confirm</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </mat-dialog-actions>
+

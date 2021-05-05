@@ -1,0 +1,40 @@
+<mat-table [dataSource]="employeeContacts">
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
+      </ng-container>
+
+    <ng-container matColumnDef="phone">
+        <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.phone }}</mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="management">
+        <mat-header-cell *matHeaderCellDef>
+          <u>Management</u>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
+          <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="add">
+        <mat-header-cell *matHeaderCellDef>
+            <button mat-raised-button color="primary" (click)="openAddDialog()" class="button-add" >
+                <i class="fa fa-fw fa-user"></i> &nbsp;
+                Add Contact
+              </button>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+        </mat-cell>
+      </ng-container>
+    <mat-header-row *matHeaderRowDef="['address', 'email', 'phone', 'management', 'add']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['address', 'email', 'phone', 'management', 'add']"></mat-row>
+
+  </mat-table>

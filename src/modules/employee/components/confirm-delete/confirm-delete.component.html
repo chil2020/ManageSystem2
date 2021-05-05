@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+    <p>Are you sure you want to delete it?</p>
+    <mat-form-field>
+        <mat-label>Please Type <span style="color:red;">Delete</span> </mat-label>
+
+        <input matInput [(ngModel)]="answer">
+      </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button color="warn" [mat-dialog-close]='answer'>Confirm</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </div>

@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>
+    Edit_EmployeeContact
+</h2>
+  <mat-dialog-content class="post-form">
+    <mat-form-field>
+        <input #contactname placeholder="Address" matInput [(ngModel)]="data.address"  required/>
+        <mat-error>Please enter your address</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea put #contactposition placeholder="Email" matInput [(ngModel)]="data.email"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your email</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #contactprofession placeholder="Phone" matInput [(ngModel)]="data.phone"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your phone</mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button color="warn" [mat-dialog-close]='data'>Confirm</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </mat-dialog-actions>
+

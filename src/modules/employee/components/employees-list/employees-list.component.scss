@@ -1,0 +1,27 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+
+  .mat-column-name {
+    max-width: 150px;
+  }
+  .mat-column-position {
+    max-width: 300px;
+  }
+  .mat-column-management {
+    max-width: 150px;
+  }
+
+  .mat-column-add {
+    max-width: 150px;
+  }
+
+  .mat-header-cell.mat-column-name {
+    color: blue;
+  }
+
+  .mat-cell.mat-column-name {
+    font-weight: bold;
+    cursor: pointer;
+  }

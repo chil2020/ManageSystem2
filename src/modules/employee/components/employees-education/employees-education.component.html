@@ -1,0 +1,51 @@
+<mat-table [dataSource]="employeeEducations">
+
+    <ng-container matColumnDef="school">
+      <mat-header-cell *matHeaderCellDef>School</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.school}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+        <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.department }}</mat-cell>
+      </ng-container>
+
+    <ng-container matColumnDef="education">
+        <mat-header-cell *matHeaderCellDef>Education</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.education }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="region">
+        <mat-header-cell *matHeaderCellDef>Region</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.region }}</mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="management">
+        <mat-header-cell *matHeaderCellDef>
+          <u>Management</u>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
+          <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="add">
+        <mat-header-cell *matHeaderCellDef>
+            <button mat-raised-button color="primary" (click)="openAddDialog()" class="button-add" >
+                <i class="fa fa-fw fa-user"></i> &nbsp;
+                Add Education
+              </button>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+        </mat-cell>
+      </ng-container>
+    <mat-header-row *matHeaderRowDef="['school', 'department', 'education', 'status', 'region', 'management', 'add']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['school', 'department', 'education', 'status', 'region', 'management', 'add']"></mat-row>
+
+  </mat-table>
+

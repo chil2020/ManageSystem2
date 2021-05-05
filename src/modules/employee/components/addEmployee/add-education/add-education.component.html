@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>
+    Edit_EmployeeEducation
+</h2>
+  <mat-dialog-content class="post-form">
+    <mat-form-field>
+        <input #educationname placeholder="School" matInput [(ngModel)]="data.school"  required/>
+        <mat-error>Please enter your school</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea put #educationposition placeholder="Eepartment" matInput [(ngModel)]="data.department"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your department</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #educationprofession placeholder="Education" matInput [(ngModel)]="data.education"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your education</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #educationprofession placeholder="Status" matInput [(ngModel)]="data.status"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your status</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #educationprofession placeholder="Region" matInput [(ngModel)]="data.region"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your region</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button color="warn" [mat-dialog-close]='data'>Confirm</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </mat-dialog-actions>
+

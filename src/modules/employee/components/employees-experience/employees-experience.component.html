@@ -1,0 +1,46 @@
+<mat-table [dataSource]="employeeExperiences">
+
+    <ng-container matColumnDef="institution">
+      <mat-header-cell *matHeaderCellDef>Institution</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.institution}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="unit">
+        <mat-header-cell *matHeaderCellDef>Unit</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.unit }}</mat-cell>
+      </ng-container>
+
+    <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef>Position</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.position }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="during">
+        <mat-header-cell *matHeaderCellDef>During</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.during }}</mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="management">
+        <mat-header-cell *matHeaderCellDef>
+          <u>Management</u>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
+          <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="add">
+        <mat-header-cell *matHeaderCellDef>
+            <button mat-raised-button color="primary" (click)="openAddDialog()" class="button-add" >
+                <i class="fa fa-fw fa-user"></i> &nbsp;
+                Add Experience
+              </button>
+          </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+        </mat-cell>
+      </ng-container>
+    <mat-header-row *matHeaderRowDef="['institution', 'unit', 'position', 'during', 'management', 'add']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['institution', 'unit', 'position', 'during', 'management', 'add']"></mat-row>
+
+  </mat-table>
+

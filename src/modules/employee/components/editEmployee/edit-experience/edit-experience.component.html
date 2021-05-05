@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>
+    Edit_EmployeeExperience
+</h2>
+  <mat-dialog-content class="post-form">
+    <mat-form-field>
+        <input #experiencename placeholder="Institution" matInput [(ngModel)]="data.institution"  required/>
+        <mat-error>Please enter your institution</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea put #experienceposition placeholder="Unit" matInput [(ngModel)]="data.unit"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your unit</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #experienceprofession placeholder="Position" matInput [(ngModel)]="data.position"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your position</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #experienceprofession placeholder="During" matInput [(ngModel)]="data.during"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your during</mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button color="warn" [mat-dialog-close]='data'>Confirm</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </mat-dialog-actions>
+
