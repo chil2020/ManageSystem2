@@ -8,13 +8,16 @@ import { EmployeeModule } from './employee.module';
 /* Containers */
 import * as employeeContainers from './containers';
 
+/* Guards */
+import { AuthGuard } from './../auth/guards/auth.guard';
+
 import { SBRouteData } from '@modules/navigation/models';
 
 /* Routes */
 export const ROUTES: Routes = [
     {
         path: '',
-        canActivate: [],
+        canActivate: [AuthGuard],
         component: employeeContainers.EmployeeComponent,
         data: {
             title: 'Employee - SB Admin Angular',
@@ -32,7 +35,7 @@ export const ROUTES: Routes = [
     },
     {
         path: 'detail/:id',
-        canActivate: [],
+        canActivate: [AuthGuard],
         component: employeeContainers.EmployeeDetailComponent,
         data: {
             title: 'Employee-Detail',

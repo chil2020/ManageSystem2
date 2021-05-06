@@ -1,4 +1,7 @@
+import { NavigationGuard } from './../../guards/navigation.guard';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthGuard } from '@modules/auth/guards';
 import { UserService } from '@modules/auth/services';
 
 @Component({
@@ -8,6 +11,15 @@ import { UserService } from '@modules/auth/services';
     styleUrls: ['top-nav-user.component.scss'],
 })
 export class TopNavUserComponent implements OnInit {
-    constructor(public userService: UserService) {}
+    constructor(
+        public userService: UserService,
+        private authGuard: AuthGuard,
+        private router: Router
+    ) {}
     ngOnInit() {}
+
+    Logout() {
+        this.authGuard.clearSession();
+        this.router.navigate([`/auth`]);
+    }
 }

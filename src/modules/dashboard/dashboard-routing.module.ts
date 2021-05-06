@@ -10,6 +10,7 @@ import { DashboardModule } from './dashboard.module';
 import * as dashboardContainers from './containers';
 
 /* Guards */
+import { AuthGuard } from './../auth/guards/auth.guard';
 import * as dashboardGuards from './guards';
 
 /* Routes */
@@ -25,7 +26,7 @@ export const ROUTES: Routes = [
                 },
             ],
         } as SBRouteData,
-        canActivate: [],
+        canActivate: [AuthGuard],
         component: dashboardContainers.DashboardComponent,
     },
     {
@@ -43,7 +44,7 @@ export const ROUTES: Routes = [
                 },
             ],
         } as SBRouteData,
-        canActivate: [],
+        canActivate: [AuthGuard],
         component: dashboardContainers.StaticComponent,
     },
     {
@@ -61,7 +62,7 @@ export const ROUTES: Routes = [
                 },
             ],
         } as SBRouteData,
-        canActivate: [],
+        canActivate: [AuthGuard],
         component: dashboardContainers.LightComponent,
     },
 ];
