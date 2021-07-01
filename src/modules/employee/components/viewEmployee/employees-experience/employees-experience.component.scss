@@ -1,0 +1,51 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 100px;
+  }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+  .mat-cell {
+    padding-right: 5px;
+}
+.mat-column-profession {
+    min-width: 200px;
+}
+  .mobile-label {
+    display: none;
+  }
+  .button-add {
+    float:right;
+  }
+
+  @media(max-width: 600px) {
+    .mobile-label {
+      width: 100px;
+      display: inline-block;
+          font-weight: bold;
+    }
+
+    .mat-header-cell.mat-column-institution,
+    .mat-header-cell.mat-column-unit,
+    .mat-header-cell.mat-column-position,
+    .mat-header-cell.mat-column-during,
+    .mat-header-cell.mat-column-management {
+        display: none;
+      }
+
+    .mat-cell {
+        padding-left: 0px;
+    }
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: 0px 5px;
+      min-height: 35px;
+    }
+
+  }

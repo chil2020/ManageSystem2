@@ -18,7 +18,7 @@ export class AddContactComponent implements OnInit {
     basicposition = new FormControl('', [Validators.required]);
     surveyForm = FormGroup;
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close('cancel');
     }
     ngOnInit(): void {}
 }

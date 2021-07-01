@@ -2,17 +2,23 @@
 
     <ng-container matColumnDef="address">
       <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label">Address:</span>
+        {{element.address}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Email:</span>
+            {{ element.email }}</mat-cell>
       </ng-container>
 
     <ng-container matColumnDef="phone">
         <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.phone }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Phone:</span>
+            {{ element.phone }}</mat-cell>
     </ng-container>
 
       <ng-container matColumnDef="management">
@@ -20,6 +26,7 @@
           <u>Management</u>
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
+            <span class="mobile-label">Management:</span>
           <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
           <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
         </mat-cell>

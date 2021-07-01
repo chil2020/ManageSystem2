@@ -2,27 +2,37 @@
 
     <ng-container matColumnDef="school">
       <mat-header-cell *matHeaderCellDef>School</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.school}}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label">School:</span>
+        {{element.school}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="department">
         <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.department }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Department:</span>
+            {{ element.department }}</mat-cell>
       </ng-container>
 
     <ng-container matColumnDef="education">
         <mat-header-cell *matHeaderCellDef>Education</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.education }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Education:</span>
+            {{ element.education }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Status:</span>
+            {{ element.status }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="region">
         <mat-header-cell *matHeaderCellDef>Region</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.region }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Region:</span>
+            {{ element.region }}</mat-cell>
     </ng-container>
 
       <ng-container matColumnDef="management">
@@ -30,6 +40,7 @@
           <u>Management</u>
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
+            <span class="mobile-label">Management:</span>
             <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
           <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
         </mat-cell>

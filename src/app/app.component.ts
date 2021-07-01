@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    title = 'sb-admin-angular';
+    title = 'managesystem';
     constructor(public router: Router, private titleService: Title) {
         this.router.events
             .pipe(filter(event => event instanceof ChildActivationEnd))

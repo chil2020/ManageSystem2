@@ -1,4 +1,4 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 

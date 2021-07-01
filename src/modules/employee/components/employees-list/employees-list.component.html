@@ -3,22 +3,50 @@
 <mat-form-field>
     <mat-label>Search Name</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
-  </mat-form-field>
-<mat-table #table [dataSource]="dataSource" matSort #sortTable="matSort" (matSortChange)="changeSort($event)" class="mat-elevation-z8">
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="openAddDialog()" class="button-add" >
+            <i class="fa fa-fw fa-user"></i>
+            Add Employee
+</button>
+
+
+<div class="example-container mat-elevation-z8">
+<mat-table [dataSource]="dataSource" [class.isMobile]="isMobile" matSort #sortTable="matSort" (matSortChange)="changeSort($event)">
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-      <mat-cell *matCellDef="let element"><a routerLink="./detail/{{element.id}}" >{{element.name}}</a></mat-cell>
+      <mat-header-cell class="test" *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label">Name:</span>
+        <a routerLink="./detail/{{element.id}}">{{element.name}}</a></mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="employeeid">
+        <mat-header-cell *matHeaderCellDef>Employee ID</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Emp_ID:</span>
+            {{ element.id }}</mat-cell>
+      </ng-container>
 
     <ng-container matColumnDef="position">
       <mat-header-cell *matHeaderCellDef>Position</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.position }}</mat-cell>
+      <mat-cell *matCellDef="let element">
+          <span class="mobile-label">Position:</span>
+        {{ element.position }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="profession">
         <mat-header-cell *matHeaderCellDef>Profession</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.profession }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Profession:</span>
+            {{ element.profession }}</mat-cell>
+      </ng-container>
+
+    <ng-container matColumnDef="updateTime">
+        <mat-header-cell *matHeaderCellDef>UpdateTime</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">UpdateTime:</span>
+            {{ element.updateTime }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="management">
@@ -26,29 +54,21 @@
           <u>Management</u>
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
+            <span class="mobile-label">Management:</span>
+          <!-- <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button> -->
           <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
         </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="add">
-        <mat-header-cell *matHeaderCellDef>
-            <button mat-raised-button color="primary" (click)="openAddDialog()" class="button-add" >
-                <i class="fa fa-fw fa-user"></i> &nbsp;
-                Add Employee
-              </button>
-          </mat-header-cell>
-        <mat-cell *matCellDef="let row">
 
-        </mat-cell>
-      </ng-container>
-    <mat-header-row *matHeaderRowDef="['name', 'position', 'profession', 'management', 'add']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['name', 'position', 'profession', 'management', 'add']"></mat-row>
+    <mat-header-row *matHeaderRowDef="['name', 'employeeid' ,'position', 'profession', 'updateTime', 'management']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'employeeid' ,'position', 'profession', 'updateTime', 'management']"></mat-row>
 
   </mat-table>
 
-  <mat-paginator #paginator
+<mat-paginator #paginator
 [length]="totalCount"
 [pageIndex]="currentPage.pageIndex"
 [pageSize]="currentPage.pageSize"
 [pageSizeOptions]="[5, 10, 15]">
 </mat-paginator>
+</div>

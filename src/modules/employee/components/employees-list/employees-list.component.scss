@@ -1,27 +1,43 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-.mat-tab-group {
-    margin-bottom: 48px;
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 100px;
   }
 
-  .mat-column-name {
-    max-width: 150px;
-  }
-  .mat-column-position {
-    max-width: 300px;
-  }
-  .mat-column-management {
-    max-width: 150px;
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
   }
 
-  .mat-column-add {
-    max-width: 150px;
+  .mat-cell {
+    padding-right: 5px;
+}
+.mat-column-profession {
+    min-width: 200px;
+}
+  .mobile-label {
+    display: none;
   }
-
-  .mat-header-cell.mat-column-name {
-    color: blue;
+  .button-add {
+    float:right;
   }
+  @media(max-width: 600px) {
+    .mobile-label {
+      width: 100px;
+      display: inline-block;
+          font-weight: bold;
+    }
 
-  .mat-cell.mat-column-name {
-    font-weight: bold;
-    cursor: pointer;
+    .mat-header-row {
+        display: none;
+    }
+    .mat-cell {
+        padding-left: 0px;
+    }
+    .mat-row {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px 20px;
+    }
   }

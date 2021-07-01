@@ -19,7 +19,7 @@ export class AddPositionComponent implements OnInit {
     employees!: EmployeeBasic[];
     surveyForm = FormGroup;
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close('cancel');
     }
     ngOnInit(): void {}
 }

@@ -1,7 +1,9 @@
 <h2 mat-dialog-title>
-    Edit_EmployeeBasic
+    Add_EmployeeBasic
 </h2>
-  <mat-dialog-content class="post-form">
+<mat-dialog-content class="post-form">
+
+    <div id='div1'>
     <mat-form-field>
         <input #basicname placeholder="Name" matInput [(ngModel)]="data.name"  required/>
         <mat-error>Please enter your name</mat-error>
@@ -17,10 +19,36 @@
         <mat-error>Please enter your profession</mat-error>
     </mat-form-field>
 
+    </div>
+    <div id='div2'>
+        <h2>Select Picture</h2>
+        <div><img src="{{imgServerURL}}" width="300px"></div>
+        <mat-form-field>
+            <div>
+
+              <mat-toolbar>
+                <!-- Display files names -->
+                <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+
+                <!-- Browse Button -->
+                <button mat-flat-button color="primary">
+                  Browse File
+                </button>
+              </mat-toolbar>
+
+              <!-- Fetch selected filed on change -->
+              <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+                accept="image/*" />
+            </div>
+          </mat-form-field>
+
+
+    </div>
   </mat-dialog-content>
 
   <mat-dialog-actions>
     <button mat-button color="warn" [mat-dialog-close]='data'>Confirm</button>
     <button mat-button (click)="onNoClick()">Cancel</button>
   </mat-dialog-actions>
+
 

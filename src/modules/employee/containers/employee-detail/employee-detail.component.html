@@ -1,32 +1,25 @@
 <sb-layout-dashboard>
-
     <sb-dashboard-head title="Employee-Detail" [hideBreadcrumbs]="false"></sb-dashboard-head>
-
-    <div *ngIf="employeeBasic">
-
-        <h2>{{employeeBasic.name | uppercase}}</h2>
+    <div class="flex">
+        <div class="top">
+        <sb-employees-basic [id]="currentId"></sb-employees-basic>
         <hr>
-        <p class="material-icons">work&nbsp;</p>{{employeeBasic.position | uppercase}}
-        <br>
-        <p class="material-icons">engineering&nbsp;</p>{{employeeBasic.profession | uppercase}}
+        </div>
+        <div class="bottom">
+            <mat-tab-group animationDuration="0ms" mat-stretch-tabs>
+                <mat-tab label="Current Position">
+                    <sb-employees-position [id]="currentId"></sb-employees-position>
+                </mat-tab>
+                <mat-tab label="Education">
+                    <sb-employees-education [id]="currentId"></sb-employees-education>
+                </mat-tab>
+                <mat-tab label="Experiences">
+                    <sb-employees-experience [id]="currentId"></sb-employees-experience>
+                </mat-tab>
+                <mat-tab label="Contact">
+                    <sb-employees-contact [id]="currentId"></sb-employees-contact>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
-
-        <mat-tab-group animationDuration="0ms" mat-stretch-tabs>
-            <mat-tab label="Current Position">
-                <sb-employees-position [id]="currentId"></sb-employees-position>
-            </mat-tab>
-            <mat-tab label="Education">
-                <sb-employees-education [id]="currentId"></sb-employees-education>
-              </mat-tab>
-            <mat-tab label="Experiences">
-                <sb-employees-experience [id]="currentId"></sb-employees-experience>
-            </mat-tab>
-            <mat-tab label="Contact">
-                <sb-employees-contact [id]="currentId"></sb-employees-contact>
-            </mat-tab>
-         </mat-tab-group>
-
 </sb-layout-dashboard>
-
-
-<!-- <h2>Hello world</h2> -->

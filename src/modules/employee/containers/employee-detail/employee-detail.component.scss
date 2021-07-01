@@ -1,0 +1,17 @@
+.flex{
+    display: flex;
+    flex-direction: column;
+}
+.flex .top{
+    flex-basis: 5%;
+    -webkit-flex-basis: 5%;
+    // background-color: red;
+
+}
+.flex .bottom{
+    flex-basis: 300px;
+    -webkit-flex-basis: 200px;
+    // background-color: yellow;
+}
+
+

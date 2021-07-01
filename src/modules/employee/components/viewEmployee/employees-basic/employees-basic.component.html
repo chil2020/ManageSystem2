@@ -1,0 +1,22 @@
+<div class="flex" *ngIf="employeeBasic">
+
+    <div class="left"><img src="{{imgServerURL}}">
+    </div>
+
+    <div class="center">
+
+    <h2>{{employeeBasic.name | uppercase}}</h2>
+
+    <p class="material-icons">work&nbsp;</p>{{employeeBasic.position | uppercase}}
+    <br>
+    <p class="material-icons">engineering&nbsp;</p>{{employeeBasic.profession | uppercase}}
+    </div>
+
+    <div class="right">
+        <button mat-raised-button color="primary" (click)="openEditDialog(employeeBasic)" class="button-add" >
+            <i class="fa fa-fw fa-user"></i> &nbsp;
+            Edit Basic
+          </button>
+    </div>
+
+</div>

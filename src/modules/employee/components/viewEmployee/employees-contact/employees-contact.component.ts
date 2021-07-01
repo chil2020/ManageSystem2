@@ -2,12 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeContact } from '@modules/employee/models';
 import { EmployeeService } from '@modules/employee/services';
-
-import { AddContactComponent } from '../addEmployee/add-contact/add-contact.component';
-import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
-import { EditContactComponent } from '../editEmployee/edit-contact/edit-contact.component';
-
-
+import { AddContactComponent } from '../../addEmployee/add-contact/add-contact.component';
+import { ConfirmDeleteComponent } from '../../confirm-delete/confirm-delete.component';
+import { EditContactComponent } from '../../editEmployee/edit-contact/edit-contact.component';
 
 @Component({
     selector: 'sb-employees-contact',
@@ -20,7 +17,7 @@ export class EmployeesContactComponent implements OnInit {
     employeeContacts!: EmployeeContact[];
     answer!: 'Delete';
     getEmployeeContacts(): void {
-        // tslint:disable-next-line:no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         // const id = +this.route.snapshot.paramMap.get('id')!;
         this.employeeService
             .getEmployeeContacts(this.id)
@@ -36,8 +33,8 @@ export class EmployeesContactComponent implements OnInit {
             data: { Contact: employeeContact },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result);
             if (result === 'Delete') {
+                console.log('The dialog was closed ' + result);
                 this.deleteContact(employeeContact);
             }
         });
@@ -59,8 +56,10 @@ export class EmployeesContactComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.editEmployeeContact(result);
+            if (result !== 'cancel') {
+                console.log('The dialog was closed ' + result.id);
+                this.editEmployeeContact(result);
+            }
         });
     }
 
@@ -80,8 +79,12 @@ export class EmployeesContactComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.addEmployeeContact(result);
+            if (result !== 'cancel') {
+                if (Object.keys(result.address).length !== 0) {
+                    console.log('Add:' + result.address);
+                    this.addEmployeeContact(result);
+                }
+            }
         });
     }
 

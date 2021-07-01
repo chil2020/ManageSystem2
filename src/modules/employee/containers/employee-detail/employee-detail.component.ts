@@ -9,20 +9,12 @@ import { EmployeeService } from '@modules/employee/services';
 })
 export class EmployeeDetailComponent implements OnInit {
     employeeBasic!: EmployeeBasic;
-    constructor(private route: ActivatedRoute, private employeeService: EmployeeService) {}
+    constructor(private route: ActivatedRoute) {}
     currentId!: number;
+    imagePath!: any;
     ngOnInit(): void {
-        // tslint:disable-next-line:no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const Id = +this.route.snapshot.paramMap.get('id')!;
         this.currentId = Id;
-        this.getEmployeeBasic();
-    }
-
-    getEmployeeBasic(): void {
-        // tslint:disable-next-line:no-non-null-assertion
-        // const id = +this.route.snapshot.paramMap.get('id')!;
-        this.employeeService
-            .getEmployeeBasic(this.currentId)
-            .subscribe(employeeBasic => (this.employeeBasic = employeeBasic));
     }
 }

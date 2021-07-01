@@ -1,4 +1,4 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SBRouteData } from '@modules/navigation/models';
@@ -18,7 +18,7 @@ export const ROUTES: Routes = [
     {
         path: '',
         data: {
-            title: 'Dashboard - SB Admin Angular',
+            title: 'Dashboard - ManagementSystem',
             breadcrumbs: [
                 {
                     text: 'Dashboard',

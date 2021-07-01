@@ -20,7 +20,7 @@ export class AddEducationComponent implements OnInit {
 
     surveyForm = FormGroup;
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close('cancel');
     }
     ngOnInit(): void {}
 }

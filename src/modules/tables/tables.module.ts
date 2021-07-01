@@ -1,4 +1,4 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';

@@ -9,6 +9,7 @@ export const sideNavSections: SideNavSection[] = [
         text: 'INTERFACE',
         items: ['employees'],
     },
+
     // {
     //     text: '舊的',
     //     items: ['layouts', 'pages', 'charts', 'tables'],
@@ -17,15 +18,20 @@ export const sideNavSections: SideNavSection[] = [
 
 export const sideNavItems: SideNavItems = {
     dashboard: {
-        icon: 'tachometer-alt',
+        icon: 'dashboard',
         text: 'Dashboard',
         link: '/dashboard',
     },
     employees: {
-        icon: 'user-friends',
+        icon: 'face',
         text: 'Employee',
         link: '/employee',
     },
+    // sos_test: {
+    //     icon: 'report',
+    //     text: 'SOS',
+    //     link: '/employee/sos',
+    // },
     layouts: {
         icon: 'columns',
         text: 'Layouts',

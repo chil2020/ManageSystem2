@@ -2,10 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeEducation } from '@modules/employee/models';
 import { EmployeeService } from '@modules/employee/services';
-
-import { AddEducationComponent } from '../addEmployee/add-education/add-education.component';
-import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
-import { EditEducationComponent } from '../editEmployee/edit-education/edit-education.component';
+import { AddEducationComponent, ConfirmDeleteComponent, EditEducationComponent } from '../..';
 
 
 @Component({
@@ -19,7 +16,7 @@ export class EmployeesEducationComponent implements OnInit {
     employeeEducations!: EmployeeEducation[];
 
     getEmployeeEducations(): void {
-        // tslint:disable-next-line:no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         // const id = +this.route.snapshot.paramMap.get('id')!;
         this.employeeService
             .getEmployeeEducations(this.id)
@@ -35,8 +32,8 @@ export class EmployeesEducationComponent implements OnInit {
             data: { Education: employeeEducation },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result);
             if (result === 'Delete') {
+                console.log('The dialog was closed ' + result);
                 this.deleteEducation(employeeEducation);
             }
         });
@@ -60,8 +57,10 @@ export class EmployeesEducationComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.editEmployeeEducation(result);
+            if (result !== 'cancel') {
+                console.log('The dialog was closed ' + result.id);
+                this.editEmployeeEducation(result);
+            }
         });
     }
 
@@ -82,8 +81,12 @@ export class EmployeesEducationComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.addEmployeeEducation(result);
+            if (result !== 'cancel') {
+                if (Object.keys(result.school).length !== 0) {
+                    console.log('Add:' + result.school);
+                    this.addEmployeeEducation(result);
+                }
+            }
         });
     }
 

@@ -13,7 +13,7 @@ export class EditContactComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: EmployeeContact
     ) {}
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close('cancel');
     }
     ngOnInit(): void {}
 }

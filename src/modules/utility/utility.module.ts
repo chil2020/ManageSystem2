@@ -1,4 +1,4 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,6 +19,7 @@ import * as utilityGuards from './guards';
 
 /* Services */
 import * as utilityServices from './services';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,7 @@ import * as utilityServices from './services';
         NavigationModule,
     ],
     providers: [...utilityServices.services, ...utilityGuards.guards],
-    declarations: [...utilityContainers.containers, ...utilityComponents.components],
+    declarations: [...utilityContainers.containers, ...utilityComponents.components, DialogComponent],
     exports: [...utilityContainers.containers, ...utilityComponents.components],
 })
 export class UtilityModule {}

@@ -2,22 +2,30 @@
 
     <ng-container matColumnDef="institution">
       <mat-header-cell *matHeaderCellDef>Institution</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.institution}}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="mobile-label">Institution:</span>
+        {{element.institution}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="unit">
         <mat-header-cell *matHeaderCellDef>Unit</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.unit }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Unit:</span>
+            {{ element.unit }}</mat-cell>
       </ng-container>
 
     <ng-container matColumnDef="position">
         <mat-header-cell *matHeaderCellDef>Position</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.position }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Position:</span>
+            {{ element.position }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="during">
         <mat-header-cell *matHeaderCellDef>During</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.during }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">During:</span>
+            {{ element.during }}</mat-cell>
     </ng-container>
 
       <ng-container matColumnDef="management">
@@ -25,6 +33,7 @@
           <u>Management</u>
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
+            <span class="mobile-label">Management:</span>
             <button mat-button color="primary" (click)="openEditDialog(row)">Edit</button>
           <button mat-button color="warn" (click)="openConfirmDialog(row)">Delete</button>
         </mat-cell>

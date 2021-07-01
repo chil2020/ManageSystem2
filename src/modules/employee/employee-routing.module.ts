@@ -1,4 +1,4 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -20,7 +20,7 @@ export const ROUTES: Routes = [
         canActivate: [AuthGuard],
         component: employeeContainers.EmployeeComponent,
         data: {
-            title: 'Employee - SB Admin Angular',
+            title: 'Employee-List',
             breadcrumbs: [
                 {
                     text: 'Dashboard',
@@ -50,6 +50,42 @@ export const ROUTES: Routes = [
                 },
                 {
                     text: 'Employee-Detail',
+                    active: true,
+                },
+            ],
+        } as SBRouteData,
+    },
+    {
+        path: 'sos',
+        canActivate: [AuthGuard],
+        component: employeeContainers.SosComponent,
+        data: {
+            title: 'SOS',
+            breadcrumbs: [
+                {
+                    text: 'Dashboard',
+                    link: '/dashboard',
+                },
+                {
+                    text: 'SOS',
+                    active: true,
+                },
+            ],
+        } as SBRouteData,
+    },
+    {
+        path: 'picture',
+        canActivate: [AuthGuard],
+        component: employeeContainers.EmployeesPictureComponent,
+        data: {
+            title: 'picture',
+            breadcrumbs: [
+                {
+                    text: 'Dashboard',
+                    link: '/dashboard',
+                },
+                {
+                    text: 'picture',
                     active: true,
                 },
             ],

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { SBRouteData, SideNavItem } from '@modules/navigation/models';
 
+
 @Component({
     selector: 'sb-side-nav-item',
     changeDetection: ChangeDetectionStrategy.OnPush,

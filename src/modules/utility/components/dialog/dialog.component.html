@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content style="margin-top: 10px;">
+  <p>{{data.content}}
+  </p>
+</div>
+<div mat-dialog-actions>
+  <div class="container-contact100-form-btn">
+    <div class="wrap-contact100-form-btn">
+            <div class="contact100-form-bgbtn"></div>
+            <button  (click)="onYesClick()" class="contact100-form-btn dialog-button" >OK</button>
+  </div>
+  </div>
+  <div class="container-contact100-form-btn" style="padding-left: 13px;">
+    <div class="wrap-contact100-form-btn">
+            <div class="contact100-form-bgbtn"></div>
+            <button [hidden]="data.noHidden" class="contact100-form-btn dialog-button " (click)="onNoClick()">Cancel</button>
+  </div>
+  </div>
+
+
+</div>

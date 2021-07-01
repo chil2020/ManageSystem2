@@ -1,10 +1,11 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 /* Modules */
 import { AppCommonModule } from '@common/app-common.module';
+import {MatIconModule} from '@angular/material/icon';
 
 /* Components */
 import * as navigationComponents from './components';
@@ -22,7 +23,7 @@ import * as navigationGuards from './guards';
 import * as navigationServices from './services';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, AppCommonModule],
+    imports: [CommonModule, RouterModule, AppCommonModule, MatIconModule],
     providers: [...navigationServices.services, ...navigationGuards.guards],
     declarations: [
         ...navigationContainers.containers,

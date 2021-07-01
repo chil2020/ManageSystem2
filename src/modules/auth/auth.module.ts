@@ -1,4 +1,4 @@
-/* tslint:disable: ordered-imports*/
+/* eslint-disable import/order */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,6 +19,7 @@ import * as authGuards from './guards';
 
 /* Services */
 import * as authServices from './services';
+import { UsersComponent } from './containers/users/users.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,7 @@ import * as authServices from './services';
         NavigationModule,
     ],
     providers: [...authServices.services, ...authGuards.guards],
-    declarations: [...authContainers.containers, ...authComponents.components],
+    declarations: [...authContainers.containers, ...authComponents.components, UsersComponent],
     exports: [...authContainers.containers, ...authComponents.components],
 })
 export class AuthModule {}

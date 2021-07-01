@@ -1,15 +1,16 @@
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { EmployeeBasic } from '@modules/employee/models';
 import { EmployeeService } from '@modules/employee/services';
-
 import { AddBasicComponent } from '../addEmployee/add-basic/add-basic.component';
 import { EditBasicComponent } from '../editEmployee/edit-basic/edit-basic.component';
-
 import { ConfirmDeleteComponent } from './../confirm-delete/confirm-delete.component';
+import 'rxjs/add/operator/map'
 
 @Component({
     selector: 'sb-employees-list',
@@ -17,6 +18,7 @@ import { ConfirmDeleteComponent } from './../confirm-delete/confirm-delete.compo
     styleUrls: ['./employees-list.component.scss'],
 })
 export class EmployeesListComponent implements OnInit {
+    isHandset$!: Observable<boolean>;
     @ViewChild('paginator') paginator!: MatPaginator;
     @ViewChild('sortTable') sortTable!: MatSort;
     totalCount!: number;
@@ -24,10 +26,13 @@ export class EmployeesListComponent implements OnInit {
     currentPage!: PageEvent;
     currentSort!: Sort;
     searchText: any;
+    uploadimage!: File;
+    uploadid!: number;
+    isMobile!: string;
     dataSource = new MatTableDataSource(this.employeeBasics);
-    constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
+    constructor(private breakpointObserver: BreakpointObserver,private employeeService: EmployeeService, private dialog: MatDialog) {}
 
-    // tslint:disable-next-line:use-lifecycle-interface
+    // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
     ngAfterViewInit(): void {
         // 分頁切換時，重新取得資料
         this.paginator.page.subscribe((page: PageEvent) => {
@@ -37,15 +42,26 @@ export class EmployeesListComponent implements OnInit {
     }
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+        this.dataSource.filter = filterValue.trim();
         this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
             return data.name.indexOf(filter) !== -1;
         };
     }
     ngOnInit(): void {
+        this.breakpointObserver.observe(Breakpoints.Handset)
+        .subscribe((state: BreakpointState) => {
+            if (state.matches) {
+                this.isMobile = 'Mobile';
+                console.log('Mobile');
+            } else {
+                this.isMobile = 'Web';
+                console.log('Web');
+            }
+        });
+
         this.currentSort = {
-            active: '',
-            direction: '',
+            active: 'updateTime',
+            direction: 'desc',
         };
         this.currentPage = {
             pageIndex: 0,
@@ -56,8 +72,12 @@ export class EmployeesListComponent implements OnInit {
     }
 
     changeSort(sortInfo: Sort) {
-        if (sortInfo.active === 'created_at') {
-            sortInfo.active = 'created';
+        if (sortInfo.active === 'updateTime') {
+            sortInfo.active = 'updateTime';
+            sortInfo.direction = 'desc';
+        } else if (sortInfo.active === 'name') {
+            sortInfo.active = 'name';
+            sortInfo.direction = 'desc';
         }
         this.currentSort = sortInfo;
         this.getBasics();
@@ -65,7 +85,12 @@ export class EmployeesListComponent implements OnInit {
 
     getBasics(): void {
         this.employeeService
-            .getEmployeeBasics(this.currentPage.pageIndex, this.currentPage.pageSize)
+            .getEmployeeBasics(
+                this.currentPage.pageIndex,
+                this.currentPage.pageSize,
+                this.currentSort.active,
+                this.currentSort.direction
+            )
             .subscribe(data => {
                 this.totalCount = data.totalElements;
                 this.employeeBasics = data.content;
@@ -79,16 +104,16 @@ export class EmployeesListComponent implements OnInit {
             data: { Basic: employeeBasic },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result);
             if (result === 'Delete') {
+                console.log('The dialog was closed ' + result);
                 this.deleteBasic(employeeBasic);
             }
+
         });
     }
 
     deleteBasic(employeeBasic: EmployeeBasic): void {
-        this.employeeBasics = this.employeeBasics.filter(e => e !== employeeBasic);
-        this.employeeService.deleteBasic(employeeBasic).subscribe();
+        this.employeeService.deleteBasic(employeeBasic).subscribe(() => this.getBasics());
     }
 
     openEditDialog(employeeBasic: EmployeeBasic): void {
@@ -102,8 +127,10 @@ export class EmployeesListComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.editEmployeeBasic(result);
+            if (result !== 'cancel') {
+                console.log('The dialog was closed ' + result.id);
+                this.editEmployeeBasic(result);
+            }
         });
     }
 
@@ -113,7 +140,6 @@ export class EmployeesListComponent implements OnInit {
 
     openAddDialog(): void {
         const confirmDialogRef = this.dialog.open(AddBasicComponent, {
-            width: '250px',
             data: {
                 name: '',
                 position: '',
@@ -121,20 +147,30 @@ export class EmployeesListComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.addEmployeeBasic(result);
+            if (result !== 'cancel') {
+                if (Object.keys(result.name).length !== 0) {
+                    console.log('Add:' + result.name);
+                    this.addEmployeeBasic(result);
+                }
+            }
         });
     }
-
     addEmployeeBasic(employeeBasic: EmployeeBasic) {
         const name = employeeBasic.name.trim();
         const position = employeeBasic.position.trim();
         const profession = employeeBasic.profession.trim();
+        const image = employeeBasic.image;
+        const imagePath = employeeBasic.imagePath;
         if (!name || !position || !profession) {
             return;
         }
         this.employeeService
             .addBasic({ name, position, profession } as EmployeeBasic)
-            .subscribe(() => this.getBasics());
+            .subscribe(result => {
+                if(image != null)
+                {this.employeeService.addPicture(result.id, image, imagePath);}
+                this.getBasics();
+            });
+
     }
 }

@@ -2,10 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeePosition } from '@modules/employee/models';
 import { EmployeeService } from '@modules/employee/services';
+import { AddPositionComponent, ConfirmDeleteComponent, EditPositionComponent } from '../..';
 
-import { AddPositionComponent } from '../addEmployee/add-position/add-position.component';
-import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
-import { EditPositionComponent } from '../editEmployee/edit-position/edit-position.component';
 
 @Component({
     selector: 'sb-employees-position',
@@ -18,7 +16,7 @@ export class EmployeesPositionComponent implements OnInit {
     employeePositions!: EmployeePosition[];
 
     getEmployeePositions(): void {
-        // tslint:disable-next-line:no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         // const id = +this.route.snapshot.paramMap.get('id')!;
         this.employeeService
             .getEmployeePositions(this.id)
@@ -34,8 +32,8 @@ export class EmployeesPositionComponent implements OnInit {
             data: { Position: employeePosition },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result);
             if (result === 'Delete') {
+                console.log('The dialog was closed ' + result);
                 this.deletePosition(employeePosition);
             }
         });
@@ -57,8 +55,10 @@ export class EmployeesPositionComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.editEmployeePosition(result);
+            if (result !== 'cancel') {
+                console.log('The dialog was closed ' + result.id);
+                this.editEmployeePosition(result);
+            }
         });
     }
 
@@ -78,8 +78,12 @@ export class EmployeesPositionComponent implements OnInit {
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result.id);
-            this.addEmployeePosition(result);
+            if (result !== 'cancel') {
+                if (Object.keys(result.institution).length !== 0) {
+                    console.log('Add:' + result.institution);
+                    this.addEmployeePosition(result);
+                }
+            }
         });
     }
 

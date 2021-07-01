@@ -1,15 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-    EmployeeBasic,
-    EmployeeContact,
-    EmployeeEducation,
-    EmployeeExperience,
-    EmployeePosition,
-} from '@modules/employee/models';
+import { constant, SERVER_URL } from '@modules/constant';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
+import { EmployeeBasic, EmployeeContact, EmployeeEducation, EmployeeExperience, EmployeePosition } from '../models';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -17,13 +11,14 @@ import { MessageService } from './message.service';
 })
 export class EmployeeService {
     constructor(private messageService: MessageService, private http: HttpClient) {}
-    private employeeBasicUrl = 'http://192.168.1.100:7777/basic'; // URL to web api
-    private employeeContactUrl = 'http://192.168.1.100:7777/contact';
-    private employeeEducationUrl = 'http://192.168.1.100:7777/education';
-    private employeeExperienceUrl = 'http://192.168.1.100:7777/experience';
-    private employeePositionUrl = 'http://192.168.1.100:7777/position';
+
+    private baseUrl =  constant.ServerPath;
+
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    httpOptions1 = {
+        headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }),
     };
 
     private log(message: string) {
@@ -31,23 +26,42 @@ export class EmployeeService {
     }
 
     /** GET: get the EmployeeMessage on the server */
-    getEmployeeBasics(page: number, perpage: number): Observable<any> {
+    getEmployeeBasics(
+        page: number,
+        perpage: number,
+        active: string,
+        direction: string
+    ): Observable<any> {
         // this.http.get<any>(this.employeesUrl).subscribe(res => {console.log(res); } );
-        return this.http.get(this.employeeBasicUrl + '?page=' + page + '&size=' + perpage);
+        return this.http.get(this.baseUrl+
+            SERVER_URL.Basic +
+                '?page=' +
+                page +
+                '&size=' +
+                perpage +
+                '&sort=' +
+                active +
+                ',' +
+                direction
+        );
     }
 
     getEmployeeBasic(id: number): Observable<EmployeeBasic> {
-        const url = `${this.employeeBasicUrl}/${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Basic}/${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeBasic>(url).pipe(
             tap(_ => this.log(`fetched EmployeeBasic id=${id}`)),
             catchError(this.handleError<EmployeeBasic>(`getEmployeeBasic id=${id}`))
         );
     }
 
+    getEmployeePicture(id: number): string {
+        const url = `${this.baseUrl+SERVER_URL.Picture}/${id}`;
+      return url;
+    }
     getEmployeePositions(id: number): Observable<EmployeePosition[]> {
-        const url = `${this.employeePositionUrl}/?id=${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Position}/?id=${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeePosition[]>(url).pipe(
             tap(_ => this.log(`fetched EmployeePosition id=${id}`)),
             catchError(this.handleError<EmployeePosition[]>(`getEmployeePosition id=${id}`))
@@ -55,8 +69,8 @@ export class EmployeeService {
     }
 
     getEmployeePosition(id: number): Observable<EmployeePosition> {
-        const url = `${this.employeePositionUrl}/${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Position}/${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeePosition>(url).pipe(
             tap(_ => this.log(`fetched EmployeePosition id=${id}`)),
             catchError(this.handleError<EmployeePosition>(`getEmployeePosition id=${id}`))
@@ -64,8 +78,8 @@ export class EmployeeService {
     }
 
     getEmployeeEducations(id: number): Observable<EmployeeEducation[]> {
-        const url = `${this.employeeEducationUrl}/?id=${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Education}/?id=${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeEducation[]>(url).pipe(
             tap(_ => this.log(`fetched EmployeeEducation id=${id}`)),
             catchError(this.handleError<EmployeeEducation[]>(`getEmployeeEducation id=${id}`))
@@ -73,8 +87,8 @@ export class EmployeeService {
     }
 
     getEmployeeEducation(id: number): Observable<EmployeeEducation> {
-        const url = `${this.employeeEducationUrl}/${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Education}/${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeEducation>(url).pipe(
             tap(_ => this.log(`fetched EmployeeEducation id=${id}`)),
             catchError(this.handleError<EmployeeEducation>(`getEmployeeEducation id=${id}`))
@@ -82,8 +96,8 @@ export class EmployeeService {
     }
 
     getEmployeeExperiences(id: number): Observable<EmployeeExperience[]> {
-        const url = `${this.employeeExperienceUrl}/?id=${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Experience}/?id=${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeExperience[]>(url).pipe(
             tap(_ => this.log(`fetched EmployeeExperience id=${id}`)),
             catchError(this.handleError<EmployeeExperience[]>(`getEmployeeExperience id=${id}`))
@@ -91,8 +105,8 @@ export class EmployeeService {
     }
 
     getEmployeeExperience(id: number): Observable<EmployeeExperience> {
-        const url = `${this.employeeExperienceUrl}/${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Experience}/${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeExperience>(url).pipe(
             tap(_ => this.log(`fetched EmployeeExperience id=${id}`)),
             catchError(this.handleError<EmployeeExperience>(`getEmployeeExperience id=${id}`))
@@ -100,8 +114,8 @@ export class EmployeeService {
     }
 
     getEmployeeContacts(id: number): Observable<EmployeeContact[]> {
-        const url = `${this.employeeContactUrl}/?id=${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Contact}/?id=${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeContact[]>(url).pipe(
             tap(_ => this.log(`fetched EmployeeContact id=${id}`)),
             catchError(this.handleError<EmployeeContact[]>(`getEmployeeContact id=${id}`))
@@ -109,8 +123,8 @@ export class EmployeeService {
     }
 
     getEmployeeContact(id: number): Observable<EmployeeContact> {
-        const url = `${this.employeeContactUrl}/${id}`;
-        // tslint:disable-next-line:no-non-null-assertion
+        const url = `${this.baseUrl+SERVER_URL.Contact}/${id}`;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.http.get<EmployeeContact>(url).pipe(
             tap(_ => this.log(`fetched EmployeeContact id=${id}`)),
             catchError(this.handleError<EmployeeContact>(`getEmployeeContact id=${id}`))
@@ -119,7 +133,7 @@ export class EmployeeService {
 
     /** PUT: update the Basic on the server */
     updateEmployeeBasic(employeeBasic: EmployeeBasic): Observable<any> {
-        return this.http.put(this.employeeBasicUrl, employeeBasic, this.httpOptions).pipe(
+        return this.http.put(this.baseUrl+SERVER_URL.Basic, employeeBasic, this.httpOptions).pipe(
             tap(_ => this.log(`updated EmployeeBasic id=${employeeBasic.id}`)),
             catchError(this.handleError<any>('updateEmployeeBasic'))
         );
@@ -127,7 +141,7 @@ export class EmployeeService {
 
     /** PUT: update the Position on the server */
     updateEmployeePosition(employeePosition: EmployeePosition): Observable<any> {
-        return this.http.put(this.employeePositionUrl, employeePosition, this.httpOptions).pipe(
+        return this.http.put(this.baseUrl+SERVER_URL.Position, employeePosition, this.httpOptions).pipe(
             tap(_ => this.log(`updated employeePosition id=${employeePosition.id}`)),
             catchError(this.handleError<any>('updateemployeePosition'))
         );
@@ -135,7 +149,7 @@ export class EmployeeService {
 
     /** PUT: update the Education on the server */
     updateEmployeeEducation(employeeEducation: EmployeeEducation): Observable<any> {
-        return this.http.put(this.employeeEducationUrl, employeeEducation, this.httpOptions).pipe(
+        return this.http.put(this.baseUrl+SERVER_URL.Education, employeeEducation, this.httpOptions).pipe(
             tap(_ => this.log(`updated employeeEducation id=${employeeEducation.id}`)),
             catchError(this.handleError<any>('updateemployeeEducation'))
         );
@@ -143,7 +157,7 @@ export class EmployeeService {
 
     /** PUT: update the Experience on the server */
     updateEmployeeExperience(employeeExperience: EmployeeExperience): Observable<any> {
-        return this.http.put(this.employeeExperienceUrl, employeeExperience, this.httpOptions).pipe(
+        return this.http.put(this.baseUrl+SERVER_URL.Experience, employeeExperience, this.httpOptions).pipe(
             tap(_ => this.log(`updated employeeExperience id=${employeeExperience.id}`)),
             catchError(this.handleError<any>('updateemployeeExperience'))
         );
@@ -151,7 +165,7 @@ export class EmployeeService {
 
     /** PUT: update the Contact on the server */
     updateEmployeeContact(employeeContact: EmployeeContact): Observable<any> {
-        return this.http.put(this.employeeContactUrl, employeeContact, this.httpOptions).pipe(
+        return this.http.put(this.baseUrl+SERVER_URL.Contact, employeeContact, this.httpOptions).pipe(
             tap(_ => this.log(`updated employeeContact id=${employeeContact.id}`)),
             catchError(this.handleError<any>('updateemployeeContact'))
         );
@@ -160,7 +174,7 @@ export class EmployeeService {
     /** POST: add a new Basic to the server */
     addBasic(employeeBasic: EmployeeBasic): Observable<EmployeeBasic> {
         return this.http
-            .post<EmployeeBasic>(this.employeeBasicUrl, employeeBasic, this.httpOptions)
+            .post<EmployeeBasic>(this.baseUrl+SERVER_URL.Basic, employeeBasic, this.httpOptions)
             .pipe(
                 tap((newemployeeBasic: EmployeeBasic) =>
                     this.log(`added basic w/ id=${newemployeeBasic.id}`)
@@ -169,10 +183,20 @@ export class EmployeeService {
             );
     }
 
+    /** POST: add a new Picture to the server */
+    addPicture(uploadid:number, image: File, imageName: string){
+        console.log(uploadid);
+        const formData = new FormData();
+        formData.append('files', image, uploadid+'_'+imageName)
+        this.http.post(this.baseUrl+SERVER_URL.Picture, formData).subscribe(data => {
+            console.log(data);
+          } , error => console.log(error));
+
+    }
     /** POST: add a new Position to the server */
     addPosition(employeePosition: EmployeePosition): Observable<EmployeePosition> {
         return this.http
-            .post<EmployeePosition>(this.employeePositionUrl, employeePosition, this.httpOptions)
+            .post<EmployeePosition>(this.baseUrl+SERVER_URL.Position, employeePosition, this.httpOptions)
             .pipe(
                 tap((newemployeePosition: EmployeePosition) =>
                     this.log(`added Position w/ id=${newemployeePosition.id}`)
@@ -184,7 +208,7 @@ export class EmployeeService {
     /** POST: add a new Education to the server */
     addEducation(employeeEducation: EmployeeEducation): Observable<EmployeeEducation> {
         return this.http
-            .post<EmployeeEducation>(this.employeeEducationUrl, employeeEducation, this.httpOptions)
+            .post<EmployeeEducation>(this.baseUrl+SERVER_URL.Education, employeeEducation, this.httpOptions)
             .pipe(
                 tap((newemployeeEducation: EmployeeEducation) =>
                     this.log(`added Education w/ id=${newemployeeEducation.id}`)
@@ -197,7 +221,7 @@ export class EmployeeService {
     addExperience(employeeExperience: EmployeeExperience): Observable<EmployeeExperience> {
         return this.http
             .post<EmployeeExperience>(
-                this.employeeExperienceUrl,
+                this.baseUrl+SERVER_URL.Experience,
                 employeeExperience,
                 this.httpOptions
             )
@@ -212,7 +236,7 @@ export class EmployeeService {
     /** POST: add a new Contact to the server */
     addContact(employeeContact: EmployeeContact): Observable<EmployeeContact> {
         return this.http
-            .post<EmployeeContact>(this.employeeContactUrl, employeeContact, this.httpOptions)
+            .post<EmployeeContact>(this.baseUrl+SERVER_URL.Contact, employeeContact, this.httpOptions)
             .pipe(
                 tap((newemployeeContact: EmployeeContact) =>
                     this.log(`added Contact w/ id=${newemployeeContact.id}`)
@@ -224,7 +248,7 @@ export class EmployeeService {
     /** DELETE: delete the Basic from the server */
     deleteBasic(employeeBasic: EmployeeBasic | number): Observable<EmployeeBasic> {
         const id = typeof employeeBasic === 'number' ? employeeBasic : employeeBasic.id;
-        const url = `${this.employeeBasicUrl}/${id}`;
+        const url = `${this.baseUrl+SERVER_URL.Basic}/${id}`;
 
         return this.http.delete<EmployeeBasic>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted basic id=${id}`)),
@@ -235,7 +259,7 @@ export class EmployeeService {
     /** DELETE: delete the Position from the server */
     deletePosition(employeePosition: EmployeePosition | number): Observable<EmployeePosition> {
         const id = typeof employeePosition === 'number' ? employeePosition : employeePosition.id;
-        const url = `${this.employeePositionUrl}/${id}`;
+        const url = `${this.baseUrl+SERVER_URL.Position}/${id}`;
 
         return this.http.delete<EmployeePosition>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted Position id=${id}`)),
@@ -246,7 +270,7 @@ export class EmployeeService {
     /** DELETE: delete the Education from the server */
     deleteEducation(employeeEducation: EmployeeEducation | number): Observable<EmployeeEducation> {
         const id = typeof employeeEducation === 'number' ? employeeEducation : employeeEducation.id;
-        const url = `${this.employeeEducationUrl}/${id}`;
+        const url = `${this.baseUrl+SERVER_URL.Education}/${id}`;
 
         return this.http.delete<EmployeeEducation>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted Education id=${id}`)),
@@ -260,7 +284,7 @@ export class EmployeeService {
     ): Observable<EmployeeExperience> {
         const id =
             typeof employeeExperience === 'number' ? employeeExperience : employeeExperience.id;
-        const url = `${this.employeeExperienceUrl}/${id}`;
+        const url = `${this.baseUrl+SERVER_URL.Experience}/${id}`;
 
         return this.http.delete<EmployeeExperience>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted Experience id=${id}`)),
@@ -271,7 +295,7 @@ export class EmployeeService {
     /** DELETE: delete the Contact from the server */
     deleteContact(employeeContact: EmployeeContact | number): Observable<EmployeeContact> {
         const id = typeof employeeContact === 'number' ? employeeContact : employeeContact.id;
-        const url = `${this.employeeContactUrl}/${id}`;
+        const url = `${this.baseUrl+SERVER_URL.Contact}/${id}`;
 
         return this.http.delete<EmployeeContact>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted Contact id=${id}`)),
@@ -283,7 +307,7 @@ export class EmployeeService {
         if (!term.trim()) {
             return of([]);
         }
-        return this.http.get<EmployeeBasic[]>(`${this.employeeBasicUrl}/?name=${term}`).pipe(
+        return this.http.get<EmployeeBasic[]>(`${this.baseUrl+SERVER_URL.Basic}/?name=${term}`).pipe(
             tap(x =>
                 x.length
                     ? this.log(`found employee matching "${term}`)
@@ -292,7 +316,7 @@ export class EmployeeService {
             catchError(this.handleError<EmployeeBasic[]>('searchEmployees', []))
         );
     }
-    // tslint:disable-next-line:typedef
+    // eslint-disable-next-line
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             // TODO: send the error to remote logging infrastructure

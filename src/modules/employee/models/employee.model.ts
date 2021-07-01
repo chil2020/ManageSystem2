@@ -3,7 +3,10 @@ export interface EmployeeBasic {
     name: string;
     position: string;
     profession: string;
+    updateTime: string;
     deleted: boolean;
+    image: File;
+    imagePath: string;
 }
 
 export interface EmployeeContact {
