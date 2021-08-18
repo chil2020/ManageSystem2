@@ -49,7 +49,7 @@ export class AuthGuard implements CanActivate {
         }
     /** 清除session storage的使用者名稱 */
     clearSession() {
-        sessionStorage.removeItem('user');
+        localStorage.removeItem(constant.localstorage_employee);
     }
 
     private handleError<T>(operation = 'operation', result?: T) {

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { IdleTimeoutService } from './idle-timeout.service';
 
-import { IdleTimeoutService } from '../idle-timeout.service';
 
 describe('IdleTimeoutService', () => {
   let service: IdleTimeoutService;

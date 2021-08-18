@@ -10,7 +10,6 @@ import { EmployeeService } from '@modules/employee/services';
 import { AddBasicComponent } from '../addEmployee/add-basic/add-basic.component';
 import { EditBasicComponent } from '../editEmployee/edit-basic/edit-basic.component';
 import { ConfirmDeleteComponent } from './../confirm-delete/confirm-delete.component';
-import 'rxjs/add/operator/map'
 
 @Component({
     selector: 'sb-employees-list',

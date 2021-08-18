@@ -1,11 +1,10 @@
-import { Observable, Subscription } from 'rxjs';
 import { UserService } from '@modules/auth/services';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthGuard } from '@modules/auth/guards';
 import { constant } from '@modules/constant';
 import moment from 'moment';
-
+import { AESEncryptDecryptService } from '@modules/auth/services/aesencrypt-decrypt.service';
 @Component({
     selector: 'sb-login',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,7 +13,7 @@ import moment from 'moment';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private router: Router, private authGuard: AuthGuard, private userService: UserService) {}
+    constructor(private router: Router, private authGuard: AuthGuard, private _AESEncryptDecryptService: AESEncryptDecryptService) {}
     username!: string;
     password!: string;
     isFail = false;
@@ -24,7 +23,12 @@ export class LoginComponent implements OnInit {
     verification() {
         this.authGuard.authentcate(this.username).subscribe(result=>{
             console.log(result);
-            if(result===this.password){
+            let result_pwd = this._AESEncryptDecryptService.decrypt(result);
+            let login_pwd = this._AESEncryptDecryptService.encrypt(this.password);
+
+            console.log(this.password);
+            console.log(result_pwd);
+            if(result_pwd===this.password){
                 const cur = moment().format('YYYY-MM-DDTHH:mm:ss');
                 console.log('cur:' + cur);
                 this.isFail=false;
@@ -44,11 +48,11 @@ export class LoginComponent implements OnInit {
 
     /** 6. 是否已經登入 */
     isLogin() {
-        return sessionStorage.getItem('user') !== null;
+        return localStorage.getItem(constant.localstorage_employee) !== null;
     }
 
     /** 7. 登出 */
     logout() {
-        sessionStorage.removeItem('user');
+        localStorage.removeItem(constant.localstorage_employee);
     }
 }

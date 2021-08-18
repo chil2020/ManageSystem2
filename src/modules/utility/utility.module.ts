@@ -31,7 +31,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
         NavigationModule,
     ],
     providers: [...utilityServices.services, ...utilityGuards.guards],
-    declarations: [...utilityContainers.containers, ...utilityComponents.components, DialogComponent],
+    declarations: [...utilityContainers.containers, ...utilityComponents.components],
     exports: [...utilityContainers.containers, ...utilityComponents.components],
 })
 export class UtilityModule {}

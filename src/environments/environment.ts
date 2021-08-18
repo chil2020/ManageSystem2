@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     // apiUrl: 'https://amobile.node-watch.com/managementsystem/restful',
-    apiUrl: 'http://192.168.1.100:7777',
+    apiUrl: 'http://192.168.2.146:7777',
   };
 /*
  * For easier debugging in development mode, you can import the following file
