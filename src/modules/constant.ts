@@ -5,6 +5,7 @@ export const constant = {
     localstorage_login_time: 'loginTime',
     localstorage_login_url: 'loginUrl',
     localstorage_employee : 'loginEmployee',
+    localstorage_email : 'loginEmail',
     localstorage_language : 'zh-tw',
     ServerPath: environment.apiUrl,
     super_admin: '999999',

@@ -17,17 +17,13 @@ export class LoginComponent implements OnInit {
     username!: string;
     password!: string;
     isFail = false;
-    warnMessage = '帳號或密碼錯誤';
+    warnMessage = ' Please Confirm Email & Password';
 
     ngOnInit() {}
     verification() {
         this.authGuard.authentcate(this.username).subscribe(result=>{
             console.log(result);
-            let result_pwd = this._AESEncryptDecryptService.decrypt(result);
-            let login_pwd = this._AESEncryptDecryptService.encrypt(this.password);
-
-            console.log(this.password);
-            console.log(result_pwd);
+            let result_pwd = this._AESEncryptDecryptService.decrypt(result.password);
             if(result_pwd===this.password){
                 const cur = moment().format('YYYY-MM-DDTHH:mm:ss');
                 console.log('cur:' + cur);
@@ -35,7 +31,8 @@ export class LoginComponent implements OnInit {
                 // sessionStorage.setItem('user', this.username);
                 localStorage.setItem(constant.localstorage_login_time, cur);
                 localStorage.setItem(constant.localstorage_login, 'true');
-                localStorage.setItem(constant.localstorage_employee, this.username);
+                localStorage.setItem(constant.localstorage_employee, result.name);
+                localStorage.setItem(constant.localstorage_email, result.email);
                 this.router.navigate(['dashboard']);
                 console.log('success');
             }

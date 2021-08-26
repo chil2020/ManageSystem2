@@ -11,10 +11,10 @@ const userSubject: ReplaySubject<User> = new ReplaySubject(1);
 export class UserService {
     constructor(private http: HttpClient) {
         this.user = {
-            id: '123',
+            id: '1',
             name: 'Admin',
-            email: 'no-reply@admintest.com',
-            password: 'admin'
+            email: 'Admin@amobile.com.tw',
+            password: '123'
         };
     }
 

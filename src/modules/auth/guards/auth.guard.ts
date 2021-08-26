@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
         tap((user: User) =>
             console.log(`search user w/ name=${user.name}`)
         )
-        ,map((user :User)=> user.password)
+        ,map((user :User)=> user)
         ,catchError(this.handleError<User>('addPosition'))
     );
     //    console.log('result: '+this.authResult);
