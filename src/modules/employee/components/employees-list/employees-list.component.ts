@@ -10,6 +10,8 @@ import { EmployeeService } from '@modules/employee/services';
 import { AddBasicComponent } from '../addEmployee/add-basic/add-basic.component';
 import { EditBasicComponent } from '../editEmployee/edit-basic/edit-basic.component';
 import { ConfirmDeleteComponent } from './../confirm-delete/confirm-delete.component';
+import { HttpClient } from '@angular/common/http';
+import { constant, SERVER_URL } from '@modules/constant';
 
 @Component({
     selector: 'sb-employees-list',
@@ -22,14 +24,17 @@ export class EmployeesListComponent implements OnInit {
     @ViewChild('sortTable') sortTable!: MatSort;
     totalCount!: number;
     employeeBasics!: EmployeeBasic[];
+    employeeBasic!: EmployeeBasic;
+    private baseUrl =  constant.ServerPath;
     currentPage!: PageEvent;
     currentSort!: Sort;
     searchText: any;
     uploadimage!: File;
     uploadid!: number;
     isMobile!: string;
+    imgServerURL!: any;
     dataSource = new MatTableDataSource(this.employeeBasics);
-    constructor(private breakpointObserver: BreakpointObserver,private employeeService: EmployeeService, private dialog: MatDialog) {}
+    constructor(private breakpointObserver: BreakpointObserver,private employeeService: EmployeeService, private dialog: MatDialog, private http: HttpClient) {}
 
     // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
     ngAfterViewInit(): void {
@@ -97,6 +102,16 @@ export class EmployeesListComponent implements OnInit {
             });
     }
 
+    getEmployeeBasic(id: any): void {
+        this.employeeService
+            .getEmployeeBasic(id)
+            .subscribe(employeeBasic => {
+                this.employeeBasic = employeeBasic;
+                this.imgServerURL=this.baseUrl+SERVER_URL.Picture+'/'+this.employeeBasic.imagePath;
+
+            });
+
+        }
     openConfirmDialog(employeeBasic: EmployeeBasic): void {
         const confirmDialogRef = this.dialog.open(ConfirmDeleteComponent, {
             width: '250px',
@@ -117,12 +132,14 @@ export class EmployeesListComponent implements OnInit {
 
     openEditDialog(employeeBasic: EmployeeBasic): void {
         const confirmDialogRef = this.dialog.open(EditBasicComponent, {
-            width: '250px',
             data: {
                 id: employeeBasic.id,
                 name: employeeBasic.name,
                 position: employeeBasic.position,
                 profession: employeeBasic.profession,
+                dept: employeeBasic.dept,
+                company: employeeBasic.company,
+                imagePath: this.imgServerURL
             },
         });
         confirmDialogRef.afterClosed().subscribe(result => {
@@ -134,7 +151,21 @@ export class EmployeesListComponent implements OnInit {
     }
 
     editEmployeeBasic(employeeBasic: EmployeeBasic) {
-        this.employeeService.updateEmployeeBasic(employeeBasic).subscribe(() => this.getBasics());
+        const image = employeeBasic.image;
+        const imageName = employeeBasic.imagePath;
+        this.employeeService.updateEmployeeBasic(employeeBasic).subscribe(result =>
+        {
+            if(image != null)
+                {
+                    const formData = new FormData();
+                    formData.append('files', image, result.id+'_'+imageName)
+                    this.http.post(this.baseUrl+SERVER_URL.Picture, formData).subscribe(() => {
+                        this.getEmployeeBasic(result.id);
+                      } , error => console.log(error));
+                    // this.employeeService.addPicture(result.id, image);
+                }
+                this.getEmployeeBasic(result.id);
+        });
     }
 
     openAddDialog(): void {
@@ -158,13 +189,15 @@ export class EmployeesListComponent implements OnInit {
         const name = employeeBasic.name.trim();
         const position = employeeBasic.position.trim();
         const profession = employeeBasic.profession.trim();
+        const dept = employeeBasic.dept.trim();
+        const company = employeeBasic.company.trim();
         const image = employeeBasic.image;
         const imagePath = employeeBasic.imagePath;
         if (!name || !position || !profession) {
             return;
         }
         this.employeeService
-            .addBasic({ name, position, profession } as EmployeeBasic)
+            .addBasic({ name, position, profession, dept, company } as EmployeeBasic)
             .subscribe(result => {
                 if(image != null)
                 {this.employeeService.addPicture(result.id, image, imagePath);}

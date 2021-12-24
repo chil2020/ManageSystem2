@@ -42,11 +42,18 @@
             {{ element.profession }}</mat-cell>
       </ng-container>
 
-    <ng-container matColumnDef="updateTime">
-        <mat-header-cell *matHeaderCellDef>UpdateTime</mat-header-cell>
+    <ng-container matColumnDef="dept">
+        <mat-header-cell *matHeaderCellDef>Dept</mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <span class="mobile-label">UpdateTime:</span>
-            {{ element.updateTime }}</mat-cell>
+            <span class="mobile-label">Dept:</span>
+            {{ element.dept }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="company">
+        <mat-header-cell *matHeaderCellDef>Company</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <span class="mobile-label">Company:</span>
+            {{ element.company }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="management">
@@ -60,8 +67,8 @@
         </mat-cell>
       </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['name', 'employeeid' ,'position', 'profession', 'updateTime', 'management']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['name', 'employeeid' ,'position', 'profession', 'updateTime', 'management']"></mat-row>
+    <mat-header-row *matHeaderRowDef="['name', 'employeeid' ,'position', 'profession', 'dept', 'company', 'management']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'employeeid' ,'position', 'profession', 'dept', 'company', 'management']"></mat-row>
 
   </mat-table>
 

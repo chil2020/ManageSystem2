@@ -40,6 +40,8 @@ export class EmployeesBasicComponent implements OnInit {
                 name: employeeBasic.name,
                 position: employeeBasic.position,
                 profession: employeeBasic.profession,
+                dept: employeeBasic.dept,
+                company: employeeBasic.company,
                 imagePath: this.imgServerURL
             },
         });

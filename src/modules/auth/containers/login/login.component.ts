@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
     verification() {
         this.authGuard.authentcate(this.username).subscribe(result=>{
             console.log(result);
-            let result_pwd = this._AESEncryptDecryptService.decrypt(result.password);
+            let result_pwd = this._AESEncryptDecryptService.decrypt(
+                result==null?'123':result.password);
             if(result_pwd===this.password){
                 const cur = moment().format('YYYY-MM-DDTHH:mm:ss');
                 console.log('cur:' + cur);

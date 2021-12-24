@@ -3,6 +3,8 @@ export interface EmployeeBasic {
     name: string;
     position: string;
     profession: string;
+    dept: string;
+    company: string;
     updateTime: string;
     deleted: boolean;
     image: File;

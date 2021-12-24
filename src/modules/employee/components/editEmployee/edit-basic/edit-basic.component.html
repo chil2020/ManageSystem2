@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-    Add_EmployeeBasic
+    Edit_EmployeeBasic
 </h2>
 <mat-dialog-content class="post-form">
 
@@ -17,6 +17,16 @@
     <mat-form-field>
         <textarea #basicprofession placeholder="Profession" matInput [(ngModel)]="data.profession"  required matTextareaAutosize></textarea>
         <mat-error>Please enter your profession</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea put #basicposition placeholder="Dept" matInput [(ngModel)]="data.dept"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your Dept</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <textarea #basicprofession placeholder="Company" matInput [(ngModel)]="data.company"  required matTextareaAutosize></textarea>
+        <mat-error>Please enter your Company</mat-error>
     </mat-form-field>
 
     </div>
